@@ -1,4 +1,5 @@
 ﻿using LazyLoadWebApp.Models;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -8,11 +9,17 @@ namespace LazyLoadWebApp.Services
 {
     public class FeedService : IFeedService
     {
+        private readonly ILogger<FeedService> _logger;
+
+        public FeedService(ILogger<FeedService> logger)
+        {
+            _logger = logger;
+        }
+
         public IEnumerable<FeedContent> ReadFeed()
         {
             try
             {
-                //specify timeout (5 secs)
                 var request = WebRequest.Create("https://www.pinterest.com/Signaturethings/brass-hooks.rss");
                 request.Timeout = 5000;
                 using (var response = request.GetResponse())
@@ -21,11 +28,11 @@ namespace LazyLoadWebApp.Services
                     return RssFeed.Load(reader);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                _logger.LogError(ex.Message, ex);
             }
+            return null;
         }
     }
 }
