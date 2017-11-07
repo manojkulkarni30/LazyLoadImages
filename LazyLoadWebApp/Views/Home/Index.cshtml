@@ -1,0 +1,38 @@
+﻿@model IEnumerable<FeedContent>
+@{
+    ViewData["Title"] = "Home Page";
+    int i = 0;
+}
+
+<div class="jumbotron text-center">
+    <h1>Lazy Load Image</h1>
+</div>
+
+@foreach (var item in Model)
+{
+    if (i == 0)
+    {
+        @Html.Raw("<div class=\"row\">")
+    }
+    <div class="col-md-4">
+        <div class="thumbnail">
+            <img alt="@item.Title" 
+                 data-src="@item.PictureUrl" 
+                 src="~/images/ajax-loader.gif" 
+                 class="img-responsive img-thumbnail lazyload" />
+            <div class="caption text-center">
+                <h3 class="text-capitalize">@item.Title</h3>
+            </div>
+        </div>
+    </div>
+    if (i < 2)
+    {
+       i++;
+    }
+    else
+    {
+        i = 0;
+        @Html.Raw("</div>");
+    }
+}
+
