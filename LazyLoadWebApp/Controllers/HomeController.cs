@@ -8,12 +8,22 @@ namespace LazyLoadWebApp.Controllers
 {
     public class HomeController : Controller
     {
+        #region Fields
+
         private readonly IFeedService _feedService;
+
+        #endregion
+
+        #region Ctor
 
         public HomeController(IFeedService feedService)
         {
             _feedService = feedService;
         }
+
+        #endregion
+
+        #region Methods
 
         public async Task<IActionResult> Index()
         {
@@ -23,7 +33,12 @@ namespace LazyLoadWebApp.Controllers
 
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(new ErrorViewModel
+            {
+                RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier
+            });
         }
+
+        #endregion
     }
 }

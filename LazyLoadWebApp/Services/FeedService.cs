@@ -10,12 +10,22 @@ namespace LazyLoadWebApp.Services
 {
     public class FeedService : IFeedService
     {
+        #region Fields
+
         private readonly ILogger<FeedService> _logger;
+
+        #endregion
+
+        #region Ctor
 
         public FeedService(ILogger<FeedService> logger)
         {
             _logger = logger;
         }
+
+        #endregion
+
+        #region Methods
 
         public async Task<IEnumerable<FeedContent>> ReadFeedAsync()
         {
@@ -34,5 +44,7 @@ namespace LazyLoadWebApp.Services
             }
             return null;
         }
+
+        #endregion
     }
 }
