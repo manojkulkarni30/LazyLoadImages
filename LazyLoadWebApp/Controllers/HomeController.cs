@@ -2,6 +2,7 @@
 using LazyLoadWebApp.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace LazyLoadWebApp.Controllers
 {
@@ -14,9 +15,9 @@ namespace LazyLoadWebApp.Controllers
             _feedService = feedService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var viewModel = _feedService.ReadFeed();
+            var viewModel = await _feedService.ReadFeedAsync();
             return View(viewModel);
         }
 

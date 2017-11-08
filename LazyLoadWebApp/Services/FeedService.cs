@@ -2,7 +2,8 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace LazyLoadWebApp.Services
@@ -16,14 +17,13 @@ namespace LazyLoadWebApp.Services
             _logger = logger;
         }
 
-        public IEnumerable<FeedContent> ReadFeed()
+        public async Task<IEnumerable<FeedContent>> ReadFeedAsync()
         {
             try
             {
-                var request = WebRequest.Create("https://www.pinterest.com/Signaturethings/brass-hooks.rss");
-                request.Timeout = 5000;
-                using (var response = request.GetResponse())
-                using (var reader = XmlReader.Create(response.GetResponseStream()))
+                using (var httpClient = new HttpClient())
+                using (var response = await httpClient.GetStreamAsync("https://www.pinterest.com/Signaturethings/brass-hooks.rss"))
+                using (var reader = XmlReader.Create(response))
                 {
                     return RssFeed.Load(reader);
                 }

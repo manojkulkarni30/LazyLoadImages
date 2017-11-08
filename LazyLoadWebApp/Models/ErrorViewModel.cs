@@ -1,5 +1,3 @@
-using System;
-
 namespace LazyLoadWebApp.Models
 {
     public class ErrorViewModel
